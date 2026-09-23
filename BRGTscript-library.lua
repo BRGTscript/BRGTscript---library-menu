@@ -1,389 +1,540 @@
--- BRGT HUB - Advanced UI Library (Updated 2026)
--- Dark Transparent Layered Theme with Red Accents & Custom Customization
 
-local Library = {}
+
+
+
+
+local UILibrary = {}
 local CoreGui = game:GetService("CoreGui")
-local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
 
--- Logo Database para sa buong library
-local LogoDatabase = {
-    ["home"] = "rbxassetid://6023426915",
-    ["teleport"] = "rbxassetid://6034818372",
-    ["settings"] = "rbxassetid://6012348036",
-    ["star"] = "rbxassetid://6035259441",
-    ["shield"] = "rbxassetid://6023426915",
-    ["sword"] = "rbxassetid://6023426915",
-    ["map"] = "rbxassetid://6035311034",
-    ["navigation"] = "rbxassetid://6035367623",
-    ["zap"] = "rbxassetid://6035689895",
-    ["sliders"] = "rbxassetid://6035500971",
-    ["play"] = "rbxassetid://6035400843",
-    ["award"] = "rbxassetid://6035259441",
-    ["gift"] = "rbxassetid://6035245892",
-    ["shopping-bag"] = "rbxassetid://6035473703",
-    ["users"] = "rbxassetid://6034293841",
-    ["user"] = "rbxassetid://6034293841",
-    ["user-plus"] = "rbxassetid://6034293841",
-    ["feather"] = "rbxassetid://6035236284",
-    ["lock"] = "rbxassetid://6031088319",
-    ["activity"] = "rbxassetid://6035419830",
-    ["minus"] = "rbxassetid://6035338803",
-    ["plus"] = "rbxassetid://6035408056",
-}
+-- Variable para sa Logo Library loadstring
+local loadLogoLibrary = "https://raw.githubusercontent.com/BRGTscript/BRGTscript---library-menu/refs/heads/main/LOGOS.luau"
 
-function Library:Load(key_link, menuName)
-    -- Tanggalin ang lumang UI kung meron man
-    if CoreGui:FindFirstChild("BRGTHubUI") then
-        CoreGui.BRGTHubUI:Destroy()
-    end
-
-    local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "BRGTHubUI"
-    ScreenGui.Parent = CoreGui
-    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-    ---------------------------------------------------------
-    -- 1. KEY SYSTEM (Mananatili ang orihinal nitong kulay)
-    ---------------------------------------------------------
-    local KeyGui = Instance.new("Frame")
-    KeyGui.Size = UDim2.new(0, 450, 0, 260)
-    KeyGui.Position = UDim2.new(0.5, -225, 0.5, -130)
-    KeyGui.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    KeyGui.BorderSizePixel = 0
-    KeyGui.Parent = ScreenGui
-
-    local KeyCorner = Instance.new("UICorner")
-    KeyCorner.CornerRadius = UDim.new(0, 10)
-    KeyCorner.Parent = KeyGui
-
-    local KeyTitle = Instance.new("TextLabel")
-    KeyTitle.Size = UDim2.new(1, 0, 0, 50)
-    KeyTitle.Text = "BRGT HUB - KEY SYSTEM"
-    KeyTitle.TextColor3 = Color3.fromRGB(255, 50, 50)
-    KeyTitle.TextSize = 14
-    KeyTitle.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-    KeyTitle.BackgroundTransparency = 1
-    KeyTitle.Parent = KeyGui
-
-    local KeyBox = Instance.new("TextBox")
-    KeyBox.Size = UDim2.new(0.85, 0, 0, 45)
-    KeyBox.Position = UDim2.new(0.075, 0, 0.35, 0)
-    KeyBox.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    KeyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    KeyBox.PlaceholderText = "Enter your key here..."
-    KeyBox.PlaceholderColor3 = Color3.fromRGB(120, 120, 120)
-    KeyBox.TextSize = 12
-    KeyBox.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
-    KeyBox.Parent = KeyGui
-
-    local BoxCorner = Instance.new("UICorner")
-    BoxCorner.CornerRadius = UDim.new(0, 8)
-    BoxCorner.Parent = KeyBox
-
-    local SubmitBtn = Instance.new("TextButton")
-    SubmitBtn.Size = UDim2.new(0.85, 0, 0, 45)
-    SubmitBtn.Position = UDim2.new(0.075, 0, 0.62, 0)
-    SubmitBtn.BackgroundColor3 = Color3.fromRGB(200, 30, 30)
-    SubmitBtn.Text = "SUBMIT KEY"
-    SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    SubmitBtn.TextSize = 13
-    SubmitBtn.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-    SubmitBtn.Parent = KeyGui
-
-    local BtnCorner = Instance.new("UICorner")
-    BtnCorner.CornerRadius = UDim.new(0, 8)
-    BtnCorner.Parent = SubmitBtn
-
-    local verified = false
-
-    SubmitBtn.MouseButton1Click:Connect(function()
-        -- Simpleng Key verification simulasyon base sa Gist link
-        verified = true
-        KeyGui:Destroy()
-        MainFrame.Visible = true
-    end)
-
-    ---------------------------------------------------------
-    -- 2. MAIN MENU (Habaan, Dark Transparent na iba-iba ang nipis/tapal)
-    ---------------------------------------------------------
-    local MainFrame = Instance.new("Frame")
-    MainFrame.Size = UDim2.new(0, 680, 0, 460) -- Mas mahaba at malaki
-    MainFrame.Position = UDim2.new(0.5, -340, 0.5, -230)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
-    MainFrame.BackgroundTransparency = 0.25 -- Layer 1: Dark Transparent Base
-    MainFrame.BorderSizePixel = 0
-    MainFrame.Visible = false
-    MainFrame.Parent = ScreenGui
-
-    local MainCorner = Instance.new("UICorner")
-    MainCorner.CornerRadius = UDim.new(0, 12)
-    MainCorner.Parent = MainFrame
-
-    -- Top Bar / Header
-    local Header = Instance.new("Frame")
-    Header.Size = UDim2.new(1, 0, 0, 40)
-    Header.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
-    Header.BackgroundTransparency = 0.4 -- Layer 2: Iba ang tapal/nipis ng transparency
-    Header.BorderSizePixel = 0
-    Header.Parent = MainFrame
-
-    local HeaderCorner = Instance.new("UICorner")
-    HeaderCorner.CornerRadius = UDim.new(0, 12)
-    HeaderCorner.Parent = Header
-
-    local TitleLabel = Instance.new("TextLabel")
-    TitleLabel.Size = UDim2.new(0, 400, 1, 0)
-    TitleLabel.Position = UDim2.new(0, 15, 0, 0)
-    TitleLabel.Text = menuName or "BRGT HUB"
-    TitleLabel.TextColor3 = Color3.fromRGB(255, 50, 50) -- Pulay na accent
-    TitleLabel.TextSize = 13 -- Maliit, pino at magandang font
-    TitleLabel.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-    TitleLabel.BackgroundTransparency = 1
-    TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-    TitleLabel.Parent = Header
-
-    -- Left Sidebar (Tab Buttons Container)
-    local Sidebar = Instance.new("ScrollingFrame")
-    Sidebar.Size = UDim2.new(0, 180, 1, -55)
-    Sidebar.Position = UDim2.new(0, 10, 0, 48)
-    Sidebar.BackgroundColor3 = Color3.fromRGB(14, 14, 14)
-    Sidebar.BackgroundTransparency = 0.5 -- Layer 3: Iba na naman ang nipis
-    Sidebar.BorderSizePixel = 0
-    Sidebar.CanvasSize = UDim2.new(0, 0, 0, 0)
-    Sidebar.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    Sidebar.ScrollBarThickness = 2
-    Sidebar.Parent = MainFrame
-
-    local SidebarLayout = Instance.new("UIListLayout")
-    SidebarLayout.SortOrder = Enum.SortOrder.LayoutIndex
-    SidebarLayout.Padding = UDim.new(0, 6)
-    SidebarLayout.Parent = Sidebar
-
-    -- Right Container (Tab Content Panel)
-    local Container = Instance.new("Frame")
-    Container.Size = UDim2.new(1, -200, 1, -55)
-    Container.Position = UDim2.new(0, 195, 0, 48)
-    Container.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    Container.BackgroundTransparency = 0.6 -- Layer 4: Mas malinaw na dark transparent para sa laman
-    Container.BorderSizePixel = 0
-    Container.Parent = MainFrame
-
-    local ContainerCorner = Instance.new("UICorner")
-    ContainerCorner.CornerRadius = UDim.new(0, 8)
-    ContainerCorner.Parent = Container
-
-    local Tabs = {}
-    local FirstTab = true
-
-    local WindowObj = {}
-
-    function WindowObj:AddTab(tabName, tabDesc, logoName)
-        local TabButton = Instance.new("TextButton")
-        TabButton.Size = UDim2.new(1, -10, 0, 36)
-        TabButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-        TabButton.BackgroundTransparency = 0.4
-        TabButton.Text = "  " .. tabName
-        TabButton.TextColor3 = Color3.fromRGB(200, 200, 200)
-        TabButton.TextSize = 11 -- Paliitin ang mga letter
-        TabButton.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
-        TabButton.TextXAlignment = Enum.TextXAlignment.Left
-        TabButton.Parent = Sidebar
-
-        local BtnCorner = Instance.new("UICorner")
-        BtnCorner.CornerRadius = UDim.new(0, 6)
-        BtnCorner.Parent = TabButton
-
-        -- Logo sa gilid ng Tab Button
-        if logoName and LogoDatabase[logoName] then
-            local LogoImg = Instance.new("ImageLabel")
-            LogoImg.Size = UDim2.new(0, 18, 0, 18)
-            LogoImg.Position = UDim2.new(1, -26, 0.5, -9)
-            LogoImg.BackgroundTransparency = 1
-            LogoImg.Image = LogoDatabase[logoName]
-            LogoImg.ImageColor3 = Color3.fromRGB(255, 50, 50) -- Kulay pula ang logo
-            LogoImg.Parent = TabButton
-        end
-
-        local TabContent = Instance.new("ScrollingFrame")
-        TabContent.Size = UDim2.new(1, 0, 1, 0)
-        TabContent.BackgroundTransparency = 1
-        TabContent.BorderSizePixel = 0
-        TabContent.Visible = false
-        TabContent.CanvasSize = UDim2.new(0, 0, 0, 0)
-        TabContent.AutomaticCanvasSize = Enum.AutomaticSize.Y
-        TabContent.ScrollBarThickness = 3
-        TabContent.Parent = Container
-
-        local ContentLayout = Instance.new("UIListLayout")
-        ContentLayout.SortOrder = Enum.SortOrder.LayoutIndex
-        ContentLayout.Padding = UDim.new(0, 10) -- May sapat na espasyo at pagitan
-        ContentLayout.Parent = TabContent
-
-        local ContentPadding = Instance.new("UIPadding")
-        ContentPadding.PaddingTop = UDim.new(0, 10)
-        ContentPadding.PaddingLeft = UDim.new(0, 10)
-        ContentPadding.PaddingRight = UDim.new(0, 10)
-        ContentPadding.Parent = TabContent
-
-        if FirstTab then
-            TabContent.Visible = true
-            TabButton.TextColor3 = Color3.fromRGB(255, 50, 50)
-            FirstTab = false
-        end
-
-        TabButton.MouseButton1Click:Connect(function()
-            for _, content in pairs(Tabs) do
-                content.Visible = false
-            end
-            for _, btn in pairs(Sidebar:GetChildren()) do
-                if btn:IsA("TextButton") then
-                    btn.TextColor3 = Color3.fromRGB(200, 200, 200)
-                end
-            end
-            TabContent.Visible = true
-            TabButton.TextColor3 = Color3.fromRGB(255, 50, 50)
-        end)
-
-        table.insert(Tabs, TabContent)
-
-        local TabObj = {}
-
-        -- Dropdown Tab (Collapsible Section na may parang bilog/pill frame, hiwalay kapag magkatabi)
-        function TabObj:AddDropdownTab(sectionName, logoName)
-            local DropFrame = Instance.new("Frame")
-            DropFrame.Size = UDim2.new(1, 0, 0, 38)
-            DropFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-            DropFrame.BackgroundTransparency = 0.3
-            DropFrame.BorderSizePixel = 0
-            DropFrame.AutomaticSize = Enum.AutomaticSize.Y
-            DropFrame.Parent = TabContent
-
-            local DropCorner = Instance.new("UICorner")
-            DropCorner.CornerRadius = UDim.new(1, 0) -- Ginawa itong parang bilog/pill ang gilid ng frame box
-            DropCorner.Parent = DropFrame
-
-            local DropToggleBtn = Instance.new("TextButton")
-            DropToggleBtn.Size = UDim2.new(1, 0, 0, 38)
-            DropToggleBtn.BackgroundTransparency = 1
-            DropToggleBtn.Text = "   " .. sectionName
-            DropToggleBtn.TextColor3 = Color3.fromRGB(240, 240, 240)
-            DropToggleBtn.TextSize = 11
-            DropToggleBtn.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-            DropToggleBtn.TextXAlignment = Enum.TextXAlignment.Left
-            DropToggleBtn.Parent = DropFrame
-
-            if logoName and LogoDatabase[logoName] then
-                local DropLogo = Instance.new("ImageLabel")
-                DropLogo.Size = UDim2.new(0, 16, 0, 16)
-                DropLogo.Position = UDim2.new(1, -30, 0.5, -8)
-                DropLogo.BackgroundTransparency = 1
-                DropLogo.Image = LogoDatabase[logoName]
-                DropLogo.ImageColor3 = Color3.fromRGB(255, 50, 50) -- Kulay pulang logo
-                DropLogo.Parent = DropToggleBtn
-            end
-
-            local InnerContainer = Instance.new("Frame")
-            InnerContainer.Size = UDim2.new(1, 0, 0, 0)
-            InnerContainer.Position = UDim2.new(0, 0, 0, 40)
-            InnerContainer.BackgroundTransparency = 1
-            InnerContainer.AutomaticSize = Enum.AutomaticSize.Y
-            InnerContainer.Visible = false
-            InnerContainer.Parent = DropFrame
-
-            local InnerLayout = Instance.new("UIListLayout")
-            InnerLayout.SortOrder = Enum.SortOrder.LayoutIndex
-            InnerLayout.Padding = UDim.new(0, 8) -- May distansya at hindi nagdidikitan ang mga items
-            InnerLayout.Parent = InnerContainer
-
-            local opened = false
-            DropToggleBtn.MouseButton1Click:Connect(function()
-                opened = not opened
-                InnerContainer.Visible = opened
-            end)
-
-            local SectionObj = {}
-
-            -- Button sa loob ng Dropdown Tab
-            function SectionObj:AddButton(btnName, btnDesc, logoName, callback)
-                local Btn = Instance.new("TextButton")
-                Btn.Size = UDim2.new(1, 0, 0, 32)
-                Btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-                Btn.BackgroundTransparency = 0.4
-                Btn.Text = "  " .. btnName
-                Btn.TextColor3 = Color3.fromRGB(220, 220, 220)
-                Btn.TextSize = 10 -- Maliit at pino
-                Btn.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
-                Btn.TextXAlignment = Enum.TextXAlignment.Left
-                Btn.Parent = InnerContainer
-
-                local BC = Instance.new("UICorner")
-                BC.CornerRadius = UDim.new(0, 6)
-                BC.Parent = Btn
-
-                if logoName and LogoDatabase[logoName] then
-                    local BLogo = Instance.new("ImageLabel")
-                    BLogo.Size = UDim2.new(0, 14, 0, 14)
-                    BLogo.Position = UDim2.new(1, -24, 0.5, -7)
-                    BLogo.BackgroundTransparency = 1
-                    BLogo.Image = LogoDatabase[logoName]
-                    BLogo.ImageColor3 = Color3.fromRGB(255, 50, 50) -- Pula ang logo ng button
-                    BLogo.Parent = Btn
-                end
-
-                Btn.MouseButton1Click:Connect(function()
-                    if callback then callback() end
-                end)
-            end
-
-            -- Toggle sa loob ng Dropdown Tab
-            function SectionObj:AddToggle(toggleName, toggleDesc, logoName, callback)
-                local Tgl = Instance.new("TextButton")
-                Tgl.Size = UDim2.new(1, 0, 0, 32)
-                Tgl.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-                Tgl.BackgroundTransparency = 0.4
-                Tgl.Text = "  " .. toggleName
-                Tgl.TextColor3 = Color3.fromRGB(220, 220, 220)
-                Tgl.TextSize = 10
-                Tgl.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
-                Tgl.TextXAlignment = Enum.TextXAlignment.Left
-                Tgl.Parent = InnerContainer
-
-                local TC = Instance.new("UICorner")
-                TC.CornerRadius = UDim.new(0, 6)
-                TC.Parent = Tgl
-
-                if logoName and LogoDatabase[logoName] then
-                    local TLogo = Instance.new("ImageLabel")
-                    TLogo.Size = UDim2.new(0, 14, 0, 14)
-                    TLogo.Position = UDim2.new(1, -24, 0.5, -7)
-                    TLogo.BackgroundTransparency = 1
-                    TLogo.Image = LogoDatabase[logoName]
-                    TLogo.ImageColor3 = Color3.fromRGB(255, 50, 50) -- Pula ang logo ng toggle
-                    TLogo.Parent = Tgl
-                end
-
-                local toggled = false
-                Tgl.MouseButton1Click:Connect(function()
-                    toggled = not toggled
-                    if toggled then
-                        Tgl.TextColor3 = Color3.fromRGB(255, 50, 50) -- Magiging pula kapag active
-                    else
-                        Tgl.TextColor3 = Color3.fromRGB(220, 220, 220)
-                    end
-                    if callback then callback(toggled) end
-                end)
-            end
-
-            return SectionObj
-        end
-
-        return TabObj
-    end
-
-    return WindowObj
+local function scaleText(textLabel, maxSize)
+    textLabel.TextScaled = true
+    textLabel.TextWrapped = true
+    textLabel.ClipsDescendants = true
+    local textConstraint = textLabel:FindFirstChildOfClass("UITextSizeConstraint") or Instance.new("UITextSizeConstraint", textLabel)
+    textConstraint.MaxTextSize = maxSize or 7
+    textConstraint.MinTextSize = 3
 end
 
-return Library
+function UILibrary:Load(keyUrl, windowTitle)
+    local localPlayer = game.Players.LocalPlayer
+    if CoreGui:FindFirstChild("KyleKeySystem") then CoreGui.KyleKeySystem:Destroy() end
+    if CoreGui:FindFirstChild("KyleBestMenu") then CoreGui.KyleBestMenu:Destroy() end
+
+    local logoRegistry = {}
+    pcall(function()
+        if loadLogoLibrary and loadLogoLibrary ~= "https://raw.githubusercontent.com/BRGTscript/BRGTscript---library-menu/refs/heads/main/LOGOS.luau" then
+            logoRegistry = loadstring(game:HttpGet(loadLogoLibrary))() or {}
+        end
+    end)
+
+    local keyScreenGui = Instance.new("ScreenGui", CoreGui)
+    keyScreenGui.Name = "KyleKeySystem"
+    keyScreenGui.ResetOnSpawn = false
+
+    local function makeDraggable(dragHandle, targetFrame)
+        local dragging, dragInput, dragStart, startPos
+        dragHandle.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true; dragStart = input.Position; startPos = targetFrame.Position
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then dragging = false end
+                end)
+            end
+        end)
+        dragHandle.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                dragInput = input
+            end
+        end)
+        UserInputService.InputChanged:Connect(function(input)
+            if input == dragInput and dragging then
+                local delta = input.Position - dragStart
+                targetFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+            end
+        end)
+    end
+
+    -- KEY SYSTEM FRAME (Retained original Red theme)
+    local keyFrame = Instance.new("Frame", keyScreenGui)
+    keyFrame.Size = UDim2.new(0, 320, 0, 195)
+    keyFrame.Position = UDim2.new(0.5, -160, 0.5, -97.5)
+    keyFrame.BackgroundColor3 = Color3.fromRGB(22, 7, 10)
+    keyFrame.BackgroundTransparency = 0.03
+    keyFrame.BorderSizePixel = 1
+    keyFrame.BorderColor3 = Color3.fromRGB(220, 45, 55)
+    keyFrame.ClipsDescendants = true
+
+    local keyCorner = Instance.new("UICorner", keyFrame)
+    keyCorner.CornerRadius = UDim.new(0, 6)
+
+    local keyTitleLabel = Instance.new("TextLabel", keyFrame)
+    keyTitleLabel.Size = UDim2.new(1, 0, 0, 36)
+    keyTitleLabel.Text = "  [ BRGT HUB ] -- KEY SYSTEM  "
+    keyTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    keyTitleLabel.BackgroundColor3 = Color3.fromRGB(35, 9, 13)
+    keyTitleLabel.BackgroundTransparency = 0.08
+    keyTitleLabel.Font = Enum.Font.GothamBold
+    scaleText(keyTitleLabel, 12)
+    makeDraggable(keyTitleLabel, keyFrame)
+
+    local keyTextBox = Instance.new("TextBox", keyFrame)
+    keyTextBox.Size = UDim2.new(0.85, 0, 0, 34)
+    keyTextBox.Position = UDim2.new(0.075, 0, 0.36, 0)
+    keyTextBox.PlaceholderText = "Enter Key Here..."
+    keyTextBox.BackgroundColor3 = Color3.fromRGB(32, 11, 15)
+    keyTextBox.BackgroundTransparency = 0.1
+    keyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    keyTextBox.PlaceholderColor3 = Color3.fromRGB(160, 160, 160)
+    keyTextBox.BorderSizePixel = 1
+    keyTextBox.BorderColor3 = Color3.fromRGB(180, 35, 45)
+    scaleText(keyTextBox, 10)
+    
+    local boxCorner = Instance.new("UICorner", keyTextBox)
+    boxCorner.CornerRadius = UDim.new(0, 4)
+
+    local checkKeyButton = Instance.new("TextButton", keyFrame)
+    checkKeyButton.Size = UDim2.new(0.85, 0, 0, 34)
+    checkKeyButton.Position = UDim2.new(0.075, 0, 0.66, 0)
+    checkKeyButton.BackgroundColor3 = Color3.fromRGB(180, 35, 45)
+    checkKeyButton.BackgroundTransparency = 0.05
+    checkKeyButton.Text = "CHECK KEY"
+    checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    checkKeyButton.Font = Enum.Font.GothamBold
+    checkKeyButton.BorderSizePixel = 1
+    checkKeyButton.BorderColor3 = Color3.fromRGB(220, 50, 60)
+    scaleText(checkKeyButton, 10)
+
+    local btnCorner = Instance.new("UICorner", checkKeyButton)
+    btnCorner.CornerRadius = UDim.new(0, 4)
+
+    local function buildMainWindow()
+        local menuScreenGui = Instance.new("ScreenGui", CoreGui)
+        menuScreenGui.Name = "KyleBestMenu"
+        menuScreenGui.ResetOnSpawn = false
+
+        -- MAIN WINDOW (Longer, wider, dark transparent with layered borders)
+        local mainFrame = Instance.new("Frame", menuScreenGui)
+        mainFrame.Size = UDim2.new(0, 580, 0, 350)
+        mainFrame.Position = UDim2.new(0.5, -290, 0.5, -175)
+        mainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 15) -- Dark Transparent Base
+        mainFrame.BackgroundTransparency = 0.12
+        mainFrame.BorderSizePixel = 1
+        mainFrame.BorderColor3 = Color3.fromRGB(50, 50, 60)
+        mainFrame.Visible = false
+
+        local mainCorner = Instance.new("UICorner", mainFrame)
+        mainCorner.CornerRadius = UDim.new(0, 6)
+
+        local topBarFrame = Instance.new("Frame", mainFrame)
+        topBarFrame.Size = UDim2.new(1, 0, 0, 30)
+        topBarFrame.Position = UDim2.new(0, 0, 0, -32)
+        topBarFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 22) -- Darker contrasting top bar
+        topBarFrame.BackgroundTransparency = 0.08
+        topBarFrame.BorderSizePixel = 1
+        topBarFrame.BorderColor3 = Color3.fromRGB(200, 40, 50) -- Red accent header border
+
+        local topCorner = Instance.new("UICorner", topBarFrame)
+        topCorner.CornerRadius = UDim.new(0, 6)
+
+        local titleLabel = Instance.new("TextLabel", topBarFrame)
+        titleLabel.Size = UDim2.new(1, -10, 1, 0)
+        titleLabel.Position = UDim2.new(0, 8, 0, 0)
+        titleLabel.BackgroundTransparency = 1
+        titleLabel.Text = windowTitle or "KYLE-SCRIPTMAKER -- BRGT HUB"
+        titleLabel.TextColor3 = Color3.fromRGB(240, 240, 240)
+        titleLabel.Font = Enum.Font.GothamBold
+        scaleText(titleLabel, 10)
+        makeDraggable(topBarFrame, mainFrame)
+
+        local tabScrollingFrame = Instance.new("ScrollingFrame", mainFrame)
+        tabScrollingFrame.Size = UDim2.new(0, 130, 1, -12)
+        tabScrollingFrame.Position = UDim2.new(0, 6, 0, 6)
+        tabScrollingFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 19)
+        tabScrollingFrame.BackgroundTransparency = 0.25
+        tabScrollingFrame.BorderSizePixel = 1
+        tabScrollingFrame.BorderColor3 = Color3.fromRGB(40, 40, 50)
+        tabScrollingFrame.ScrollBarThickness = 2
+
+        local tabLayout = Instance.new("UIListLayout", tabScrollingFrame)
+        tabLayout.Padding = UDim.new(0, 5)
+
+        local containerFrame = Instance.new("Frame", mainFrame)
+        containerFrame.Size = UDim2.new(1, -144, 1, -12)
+        containerFrame.Position = UDim2.new(0, 140, 0, 6)
+        containerFrame.BackgroundTransparency = 1
+        containerFrame.ClipsDescendants = true
+
+        local toggleOpenButton = Instance.new("TextButton", menuScreenGui)
+        toggleOpenButton.Size = UDim2.new(0, 75, 0, 24)
+        toggleOpenButton.Position = UDim2.new(0.5, -37.5, 0.03, 0)
+        toggleOpenButton.BackgroundColor3 = Color3.fromRGB(180, 35, 45)
+        toggleOpenButton.BackgroundTransparency = 0.1
+        toggleOpenButton.Text = "CLOSE"
+        toggleOpenButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        toggleOpenButton.Font = Enum.Font.GothamBold
+        toggleOpenButton.BorderSizePixel = 1
+        toggleOpenButton.BorderColor3 = Color3.fromRGB(220, 50, 60)
+        toggleOpenButton.Draggable = true
+        scaleText(toggleOpenButton, 9)
+        
+        local openCorner = Instance.new("UICorner", toggleOpenButton)
+        openCorner.CornerRadius = UDim.new(0, 4)
+
+        toggleOpenButton.MouseButton1Click:Connect(function()
+            mainFrame.Visible = not mainFrame.Visible
+            toggleOpenButton.Text = mainFrame.Visible and "CLOSE" or "OPEN"
+        end)
+
+        local tabContainerRegistry = {}
+        local isTweeningTab = false
+        local windowAPI = {}
+
+        function windowAPI:AddTab(tabName, tabDescription, logoName)
+            local tabButton = Instance.new("TextButton", tabScrollingFrame)
+            tabButton.Size = UDim2.new(1, -4, 0, 28)
+            tabButton.BackgroundColor3 = Color3.fromRGB(110, 25, 35) -- Reddish accent tab
+            tabButton.BackgroundTransparency = 0.2
+            tabButton.Text = "   " .. tabName
+            tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            tabButton.BorderSizePixel = 1
+            tabButton.BorderColor3 = Color3.fromRGB(160, 35, 45)
+            tabButton.TextXAlignment = Enum.TextXAlignment.Left
+            tabButton.Font = Enum.Font.GothamSemibold
+            scaleText(tabButton, 8)
+
+            local tabCorner = Instance.new("UICorner", tabButton)
+            tabCorner.CornerRadius = UDim.new(0, 4)
+
+            -- Fixed Logo Registry Handler
+            if logoName and logoRegistry and logoRegistry[logoName] then
+                local logoImage = Instance.new("ImageLabel", tabButton)
+                logoImage.Size = UDim2.new(0, 16, 0, 16)
+                logoImage.Position = UDim2.new(0, 6, 0.5, -8)
+                logoImage.BackgroundTransparency = 1
+                logoImage.Image = tostring(logoRegistry[logoName])
+                logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                tabButton.Text = "      " .. tabName
+            end
+
+            local tabContentFrame = Instance.new("Frame", containerFrame)
+            tabContentFrame.Size = UDim2.new(1, 0, 1, 0)
+            tabContentFrame.BackgroundTransparency = 1
+            tabContentFrame.Visible = false
+
+            local descLabel = Instance.new("TextLabel", tabContentFrame)
+            descLabel.Size = UDim2.new(1, -5, 0, 0)
+            descLabel.AutomaticSize = Enum.AutomaticSize.Y
+            descLabel.Position = UDim2.new(0, 0, 0, 0)
+            descLabel.BackgroundTransparency = 1
+            descLabel.Text = tabDescription or ""
+            descLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+            descLabel.Font = Enum.Font.GothamMedium
+            descLabel.TextYAlignment = Enum.TextYAlignment.Top
+            scaleText(descLabel, 8)
+
+            local contentScrolling = Instance.new("ScrollingFrame", tabContentFrame)
+            contentScrolling.Size = UDim2.new(1, 0, 1, 0)
+            contentScrolling.BackgroundTransparency = 1
+            contentScrolling.ScrollBarThickness = 3
+            contentScrolling.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+            local leftColumn = Instance.new("Frame", contentScrolling)
+            leftColumn.Size = UDim2.new(0.485, 0, 0, 0)
+            leftColumn.Position = UDim2.new(0, 0, 0, 0)
+            leftColumn.BackgroundTransparency = 1
+            leftColumn.AutomaticSize = Enum.AutomaticSize.Y
+
+            local rightColumn = Instance.new("Frame", contentScrolling)
+            rightColumn.Size = UDim2.new(0.485, 0, 0, 0)
+            rightColumn.Position = UDim2.new(0.515, 0, 0, 0)
+            rightColumn.BackgroundTransparency = 1
+            rightColumn.AutomaticSize = Enum.AutomaticSize.Y
+
+            local leftLayout = Instance.new("UIListLayout", leftColumn)
+            leftLayout.Padding = UDim.new(0, 8) -- Added proper spacing between elements
+            leftLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+            local rightLayout = Instance.new("UIListLayout", rightColumn)
+            rightLayout.Padding = UDim.new(0, 8) -- Added proper spacing between elements
+            rightLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+            local columnToggle = 0
+            local function getActiveColumn()
+                columnToggle = columnToggle + 1
+                return columnToggle % 2 == 1 and leftColumn or rightColumn
+            end
+
+            local function updateCanvasPosition()
+                if descLabel.Text == "" then
+                    contentScrolling.Position = UDim2.new(0, 0, 0, 0)
+                    contentScrolling.Size = UDim2.new(1, 0, 1, 0)
+                else
+                    local paddingOffset = 16
+                    local descHeight = descLabel.AbsoluteSize.Y + paddingOffset
+                    contentScrolling.Position = UDim2.new(0, 0, 0, descHeight)
+                    contentScrolling.Size = UDim2.new(1, 0, 1, -descHeight)
+                end
+            end
+
+            descLabel:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateCanvasPosition)
+            task.defer(updateCanvasPosition)
+
+            local function updateCanvasSize()
+                local leftHeight = leftLayout.AbsoluteContentSize.Y
+                local rightHeight = rightLayout.AbsoluteContentSize.Y
+                local maxHeight = math.max(leftHeight, rightHeight)
+                contentScrolling.CanvasSize = UDim2.new(0, 0, 0, maxHeight + 20)
+            end
+
+            leftLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvasSize)
+            rightLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvasSize)
+
+            tabContainerRegistry[tabName] = tabContentFrame
+            tabButton.MouseButton1Click:Connect(function()
+                if isTweeningTab or tabContentFrame.Visible then return end
+                isTweeningTab = true
+                for _, frame in pairs(tabContainerRegistry) do frame.Visible = false end
+                tabContentFrame.Position = UDim2.new(1, 0, 0, 0)
+                tabContentFrame.Visible = true
+                tabContentFrame:TweenPosition(UDim2.new(0, 0, 0, 0), "Out", "Quart", 0.25, true)
+                task.wait(0.25)
+                isTweeningTab = false
+            end)
+
+            local elementAPI = {}
+
+            function elementAPI:AddDropdownTab(sectionName)
+                local targetColumn = getActiveColumn()
+                
+                -- Dropdown tab outer wrapper (bilog-bilog/smooth corners box frame style)
+                local sectionFrame = Instance.new("Frame", targetColumn)
+                sectionFrame.Size = UDim2.new(1, 0, 0, 0)
+                sectionFrame.AutomaticSize = Enum.AutomaticSize.Y
+                sectionFrame.BackgroundColor3 = Color3.fromRGB(22, 14, 18)
+                sectionFrame.BackgroundTransparency = 0.2
+                sectionFrame.BorderSizePixel = 1
+                sectionFrame.BorderColor3 = Color3.fromRGB(140, 35, 45)
+
+                local secCorner = Instance.new("UICorner", sectionFrame)
+                secCorner.CornerRadius = UDim.new(0, 6) -- Parang bilog ang gilid ng box frame
+
+                local sectionHeader = Instance.new("TextButton", sectionFrame)
+                sectionHeader.Size = UDim2.new(1, 0, 0, 26)
+                sectionHeader.BackgroundColor3 = Color3.fromRGB(35, 12, 18)
+                sectionHeader.BackgroundTransparency = 0.1
+                sectionHeader.Text = "   " .. sectionName
+                sectionHeader.TextColor3 = Color3.fromRGB(255, 255, 255)
+                sectionHeader.BorderSizePixel = 0
+                sectionHeader.TextXAlignment = Enum.TextXAlignment.Left
+                sectionHeader.Font = Enum.Font.GothamBold
+                scaleText(sectionHeader, 8)
+
+                local headCorner = Instance.new("UICorner", sectionHeader)
+                headCorner.CornerRadius = UDim.new(0, 6)
+
+                local arrowLabel = Instance.new("TextLabel", sectionHeader)
+                arrowLabel.Size = UDim2.new(0, 20, 1, 0)
+                arrowLabel.Position = UDim2.new(1, -24, 0, 0)
+                arrowLabel.BackgroundTransparency = 1
+                arrowLabel.Text = "▲"
+                arrowLabel.TextColor3 = Color3.fromRGB(220, 45, 55)
+                scaleText(arrowLabel, 8)
+
+                local sectionContent = Instance.new("Frame", sectionFrame)
+                sectionContent.Size = UDim2.new(1, 0, 0, 0)
+                sectionContent.Position = UDim2.new(0, 0, 0, 28)
+                sectionContent.AutomaticSize = Enum.AutomaticSize.Y
+                sectionContent.BackgroundTransparency = 1
+                sectionContent.ClipsDescendants = true
+
+                local sectionLayout = Instance.new("UIListLayout", sectionContent)
+                sectionLayout.Padding = UDim.new(0, 6)
+                sectionLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+                local isSectionOpen = true
+                sectionHeader.MouseButton1Click:Connect(function()
+                    isSectionOpen = not isSectionOpen
+                    sectionContent.Visible = isSectionOpen
+                    arrowLabel.Text = isSectionOpen and "▲" or "▼"
+                end)
+
+                local subElementAPI = {}
+                function subElementAPI:AddToggle(toggleTitle, description, callback)
+                    local wrapper = Instance.new("Frame", sectionContent)
+                    wrapper.Size = UDim2.new(1, 0, 0, 24)
+                    wrapper.BackgroundTransparency = 1
+
+                    local toggleMain = Instance.new("Frame", wrapper)
+                    toggleMain.Size = UDim2.new(1, 0, 0, 24)
+                    toggleMain.BackgroundColor3 = Color3.fromRGB(40, 15, 20)
+                    toggleMain.BackgroundTransparency = 0.15
+                    toggleMain.BorderSizePixel = 1
+                    toggleMain.BorderColor3 = Color3.fromRGB(150, 35, 45)
+
+                    local tCorner = Instance.new("UICorner", toggleMain)
+                    tCorner.CornerRadius = UDim.new(0, 4)
+
+                    local titleText = Instance.new("TextLabel", toggleMain)
+                    titleText.Size = UDim2.new(1, -30, 1, 0)
+                    titleText.Position = UDim2.new(0, 6, 0, 0)
+                    titleText.Text = toggleTitle
+                    titleText.TextColor3 = Color3.fromRGB(240, 240, 240)
+                    titleText.BackgroundTransparency = 1
+                    titleText.TextXAlignment = Enum.TextXAlignment.Left
+                    titleText.Font = Enum.Font.GothamMedium
+                    scaleText(titleText, 7.5)
+
+                    local toggleButtonBox = Instance.new("TextButton", toggleMain)
+                    toggleButtonBox.Size = UDim2.new(0, 14, 0, 14)
+                    toggleButtonBox.Position = UDim2.new(1, -20, 0.5, -7)
+                    toggleButtonBox.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+                    toggleButtonBox.Text = ""
+                    toggleButtonBox.BorderSizePixel = 0
+                    
+                    local bCorner = Instance.new("UICorner", toggleButtonBox)
+                    bCorner.CornerRadius = UDim.new(0, 3)
+
+                    local isToggled = false
+                    toggleButtonBox.MouseButton1Click:Connect(function()
+                        isToggled = not isToggled
+                        toggleButtonBox.BackgroundColor3 = isToggled and Color3.fromRGB(40, 200, 80) or Color3.fromRGB(220, 40, 40)
+                        callback(isToggled)
+                    end)
+                end
+
+                function subElementAPI:AddButton(buttonTitle, description, callback)
+                    local wrapper = Instance.new("Frame", sectionContent)
+                    wrapper.Size = UDim2.new(1, 0, 0, 24)
+                    wrapper.BackgroundTransparency = 1
+
+                    local buttonObject = Instance.new("TextButton", wrapper)
+                    buttonObject.Size = UDim2.new(1, 0, 0, 24)
+                    buttonObject.BackgroundColor3 = Color3.fromRGB(80, 20, 30)
+                    buttonObject.BackgroundTransparency = 0.1
+                    buttonObject.Text = buttonTitle
+                    buttonObject.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    buttonObject.BorderSizePixel = 1
+                    buttonObject.BorderColor3 = Color3.fromRGB(160, 40, 50)
+                    buttonObject.Font = Enum.Font.GothamSemibold
+                    scaleText(buttonObject, 7.5)
+
+                    local btnC = Instance.new("UICorner", buttonObject)
+                    btnC.CornerRadius = UDim.new(0, 4)
+
+                    buttonObject.MouseButton1Click:Connect(function()
+                        local originalColor = buttonObject.BackgroundColor3
+                        buttonObject.BackgroundColor3 = Color3.fromRGB(220, 50, 60)
+                        task.wait(0.1)
+                        buttonObject.BackgroundColor3 = originalColor
+                        callback()
+                    end)
+                end
+
+                return subElementAPI
+            end
+
+            function elementAPI:AddToggle(toggleTitle, description, callback)
+                local targetColumn = getActiveColumn()
+                local wrapper = Instance.new("Frame", targetColumn)
+                wrapper.Size = UDim2.new(1, 0, 0, 24)
+                wrapper.BackgroundTransparency = 1
+
+                local toggleMain = Instance.new("Frame", wrapper)
+                toggleMain.Size = UDim2.new(1, 0, 0, 24)
+                toggleMain.BackgroundColor3 = Color3.fromRGB(40, 15, 20)
+                toggleMain.BackgroundTransparency = 0.15
+                toggleMain.BorderSizePixel = 1
+                toggleMain.BorderColor3 = Color3.fromRGB(150, 35, 45)
+
+                local tCorner = Instance.new("UICorner", toggleMain)
+                tCorner.CornerRadius = UDim.new(0, 4)
+
+                local titleText = Instance.new("TextLabel", toggleMain)
+                titleText.Size = UDim2.new(1, -30, 1, 0)
+                titleText.Position = UDim2.new(0, 6, 0, 0)
+                titleText.Text = toggleTitle
+                titleText.TextColor3 = Color3.fromRGB(240, 240, 240)
+                titleText.BackgroundTransparency = 1
+                titleText.TextXAlignment = Enum.TextXAlignment.Left
+                titleText.Font = Enum.Font.GothamMedium
+                scaleText(titleText, 7.5)
+
+                local toggleButtonBox = Instance.new("TextButton", toggleMain)
+                toggleButtonBox.Size = UDim2.new(0, 14, 0, 14)
+                toggleButtonBox.Position = UDim2.new(1, -20, 0.5, -7)
+                toggleButtonBox.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+                toggleButtonBox.Text = ""
+                toggleButtonBox.BorderSizePixel = 0
+
+                local bCorner = Instance.new("UICorner", toggleButtonBox)
+                bCorner.CornerRadius = UDim.new(0, 3)
+
+                local isToggled = false
+                toggleButtonBox.MouseButton1Click:Connect(function()
+                    isToggled = not isToggled
+                    toggleButtonBox.BackgroundColor3 = isToggled and Color3.fromRGB(40, 200, 80) or Color3.fromRGB(220, 40, 40)
+                    callback(isToggled)
+                end)
+            end
+
+            function elementAPI:AddButton(buttonTitle, description, callback)
+                local targetColumn = getActiveColumn()
+                local wrapper = Instance.new("Frame", targetColumn)
+                wrapper.Size = UDim2.new(1, 0, 0, 24)
+                wrapper.BackgroundTransparency = 1
+
+                local buttonObject = Instance.new("TextButton", wrapper)
+                buttonObject.Size = UDim2.new(1, 0, 0, 24)
+                buttonObject.BackgroundColor3 = Color3.fromRGB(80, 20, 30)
+                buttonObject.BackgroundTransparency = 0.1
+                buttonObject.Text = buttonTitle
+                buttonObject.TextColor3 = Color3.fromRGB(255, 255, 255)
+                buttonObject.BorderSizePixel = 1
+                buttonObject.BorderColor3 = Color3.fromRGB(160, 40, 50)
+                buttonObject.Font = Enum.Font.GothamSemibold
+                scaleText(buttonObject, 7.5)
+
+                local btnC = Instance.new("UICorner", buttonObject)
+                btnC.CornerRadius = UDim.new(0, 4)
+
+                buttonObject.MouseButton1Click:Connect(function()
+                    local originalColor = buttonObject.BackgroundColor3
+                    buttonObject.BackgroundColor3 = Color3.fromRGB(220, 50, 60)
+                    task.wait(0.1)
+                    buttonObject.BackgroundColor3 = originalColor
+                    callback()
+                end)
+            end
+
+            return elementAPI
+        end
+        return windowAPI
+    end
+
+    checkKeyButton.MouseButton1Click:Connect(function()
+        local success, fetchedKey = pcall(function()
+            return game:HttpGet(keyUrl)
+        end)
+        if success then
+            local cleanKey = fetchedKey:gsub("%s+", "")
+            if keyTextBox.Text == cleanKey then
+                keyScreenGui:Destroy()
+                _G.KyleMenu = buildMainWindow()
+            else
+                checkKeyButton.Text = "WRONG KEY"
+                task.wait(2)
+                checkKeyButton.Text = "CHECK KEY"
+            end
+        end
+    end)
+
+    repeat task.wait() until not keyScreenGui.Parent
+    return _G.KyleMenu
+end
+
+return UILibrary
