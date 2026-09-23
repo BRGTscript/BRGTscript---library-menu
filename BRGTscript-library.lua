@@ -1,8 +1,3 @@
-
-
-
-
-
 local UILibrary = {}
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
@@ -27,7 +22,7 @@ function UILibrary:Load(keyUrl, windowTitle)
 
     local logoRegistry = {}
     pcall(function()
-        if loadLogoLibrary and loadLogoLibrary ~= "https://raw.githubusercontent.com/BRGTscript/BRGTscript---library-menu/refs/heads/main/LOGOS.luau" then
+        if loadLogoLibrary and loadLogoLibrary ~= "" then
             logoRegistry = loadstring(game:HttpGet(loadLogoLibrary))() or {}
         end
     end)
@@ -59,11 +54,11 @@ function UILibrary:Load(keyUrl, windowTitle)
         end)
     end
 
-    -- KEY SYSTEM FRAME (Retained original Red theme)
+    -- KEY SYSTEM FRAME
     local keyFrame = Instance.new("Frame", keyScreenGui)
     keyFrame.Size = UDim2.new(0, 320, 0, 195)
     keyFrame.Position = UDim2.new(0.5, -160, 0.5, -97.5)
-    keyFrame.BackgroundColor3 = Color3.fromRGB(22, 7, 10)
+    keyFrame.BackgroundColor3 = Color3.fromRGB(28, 12, 16)
     keyFrame.BackgroundTransparency = 0.03
     keyFrame.BorderSizePixel = 1
     keyFrame.BorderColor3 = Color3.fromRGB(220, 45, 55)
@@ -76,7 +71,7 @@ function UILibrary:Load(keyUrl, windowTitle)
     keyTitleLabel.Size = UDim2.new(1, 0, 0, 36)
     keyTitleLabel.Text = "  [ BRGT HUB ] -- KEY SYSTEM  "
     keyTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    keyTitleLabel.BackgroundColor3 = Color3.fromRGB(35, 9, 13)
+    keyTitleLabel.BackgroundColor3 = Color3.fromRGB(45, 15, 22)
     keyTitleLabel.BackgroundTransparency = 0.08
     keyTitleLabel.Font = Enum.Font.GothamBold
     scaleText(keyTitleLabel, 12)
@@ -86,10 +81,10 @@ function UILibrary:Load(keyUrl, windowTitle)
     keyTextBox.Size = UDim2.new(0.85, 0, 0, 34)
     keyTextBox.Position = UDim2.new(0.075, 0, 0.36, 0)
     keyTextBox.PlaceholderText = "Enter Key Here..."
-    keyTextBox.BackgroundColor3 = Color3.fromRGB(32, 11, 15)
+    keyTextBox.BackgroundColor3 = Color3.fromRGB(40, 18, 24)
     keyTextBox.BackgroundTransparency = 0.1
     keyTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    keyTextBox.PlaceholderColor3 = Color3.fromRGB(160, 160, 160)
+    keyTextBox.PlaceholderColor3 = Color3.fromRGB(180, 180, 180)
     keyTextBox.BorderSizePixel = 1
     keyTextBox.BorderColor3 = Color3.fromRGB(180, 35, 45)
     scaleText(keyTextBox, 10)
@@ -117,14 +112,14 @@ function UILibrary:Load(keyUrl, windowTitle)
         menuScreenGui.Name = "KyleBestMenu"
         menuScreenGui.ResetOnSpawn = false
 
-        -- MAIN WINDOW (Longer, wider, dark transparent with layered borders)
+        -- MAIN WINDOW (Pinagandang liwanag - hindi na sobrang dilim)
         local mainFrame = Instance.new("Frame", menuScreenGui)
         mainFrame.Size = UDim2.new(0, 580, 0, 350)
         mainFrame.Position = UDim2.new(0.5, -290, 0.5, -175)
-        mainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 15) -- Dark Transparent Base
-        mainFrame.BackgroundTransparency = 0.12
+        mainFrame.BackgroundColor3 = Color3.fromRGB(24, 24, 30) 
+        mainFrame.BackgroundTransparency = 0.08
         mainFrame.BorderSizePixel = 1
-        mainFrame.BorderColor3 = Color3.fromRGB(50, 50, 60)
+        mainFrame.BorderColor3 = Color3.fromRGB(70, 70, 85)
         mainFrame.Visible = false
 
         local mainCorner = Instance.new("UICorner", mainFrame)
@@ -133,10 +128,10 @@ function UILibrary:Load(keyUrl, windowTitle)
         local topBarFrame = Instance.new("Frame", mainFrame)
         topBarFrame.Size = UDim2.new(1, 0, 0, 30)
         topBarFrame.Position = UDim2.new(0, 0, 0, -32)
-        topBarFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 22) -- Darker contrasting top bar
-        topBarFrame.BackgroundTransparency = 0.08
+        topBarFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 40)
+        topBarFrame.BackgroundTransparency = 0.05
         topBarFrame.BorderSizePixel = 1
-        topBarFrame.BorderColor3 = Color3.fromRGB(200, 40, 50) -- Red accent header border
+        topBarFrame.BorderColor3 = Color3.fromRGB(200, 40, 50)
 
         local topCorner = Instance.new("UICorner", topBarFrame)
         topCorner.CornerRadius = UDim.new(0, 6)
@@ -154,10 +149,10 @@ function UILibrary:Load(keyUrl, windowTitle)
         local tabScrollingFrame = Instance.new("ScrollingFrame", mainFrame)
         tabScrollingFrame.Size = UDim2.new(0, 130, 1, -12)
         tabScrollingFrame.Position = UDim2.new(0, 6, 0, 6)
-        tabScrollingFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 19)
-        tabScrollingFrame.BackgroundTransparency = 0.25
+        tabScrollingFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+        tabScrollingFrame.BackgroundTransparency = 0.2
         tabScrollingFrame.BorderSizePixel = 1
-        tabScrollingFrame.BorderColor3 = Color3.fromRGB(40, 40, 50)
+        tabScrollingFrame.BorderColor3 = Color3.fromRGB(45, 45, 55)
         tabScrollingFrame.ScrollBarThickness = 2
 
         local tabLayout = Instance.new("UIListLayout", tabScrollingFrame)
@@ -195,14 +190,15 @@ function UILibrary:Load(keyUrl, windowTitle)
         local windowAPI = {}
 
         function windowAPI:AddTab(tabName, tabDescription, logoName)
+            -- Tab Button sa gilid: Subrang nipis/subtle na kulay dark (wala nang matingkad na red)
             local tabButton = Instance.new("TextButton", tabScrollingFrame)
             tabButton.Size = UDim2.new(1, -4, 0, 28)
-            tabButton.BackgroundColor3 = Color3.fromRGB(110, 25, 35) -- Reddish accent tab
-            tabButton.BackgroundTransparency = 0.2
+            tabButton.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+            tabButton.BackgroundTransparency = 0.5
             tabButton.Text = "   " .. tabName
-            tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            tabButton.TextColor3 = Color3.fromRGB(230, 230, 230)
             tabButton.BorderSizePixel = 1
-            tabButton.BorderColor3 = Color3.fromRGB(160, 35, 45)
+            tabButton.BorderColor3 = Color3.fromRGB(55, 55, 70)
             tabButton.TextXAlignment = Enum.TextXAlignment.Left
             tabButton.Font = Enum.Font.GothamSemibold
             scaleText(tabButton, 8)
@@ -210,7 +206,7 @@ function UILibrary:Load(keyUrl, windowTitle)
             local tabCorner = Instance.new("UICorner", tabButton)
             tabCorner.CornerRadius = UDim.new(0, 4)
 
-            -- Fixed Logo Registry Handler
+            -- Logo Handler para sa Tab Button
             if logoName and logoRegistry and logoRegistry[logoName] then
                 local logoImage = Instance.new("ImageLabel", tabButton)
                 logoImage.Size = UDim2.new(0, 16, 0, 16)
@@ -232,7 +228,7 @@ function UILibrary:Load(keyUrl, windowTitle)
             descLabel.Position = UDim2.new(0, 0, 0, 0)
             descLabel.BackgroundTransparency = 1
             descLabel.Text = tabDescription or ""
-            descLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+            descLabel.TextColor3 = Color3.fromRGB(210, 210, 210)
             descLabel.Font = Enum.Font.GothamMedium
             descLabel.TextYAlignment = Enum.TextYAlignment.Top
             scaleText(descLabel, 8)
@@ -256,11 +252,11 @@ function UILibrary:Load(keyUrl, windowTitle)
             rightColumn.AutomaticSize = Enum.AutomaticSize.Y
 
             local leftLayout = Instance.new("UIListLayout", leftColumn)
-            leftLayout.Padding = UDim.new(0, 8) -- Added proper spacing between elements
+            leftLayout.Padding = UDim.new(0, 6)
             leftLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
             local rightLayout = Instance.new("UIListLayout", rightColumn)
-            rightLayout.Padding = UDim.new(0, 8) -- Added proper spacing between elements
+            rightLayout.Padding = UDim.new(0, 6)
             rightLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
             local columnToggle = 0
@@ -308,25 +304,25 @@ function UILibrary:Load(keyUrl, windowTitle)
 
             local elementAPI = {}
 
-            function elementAPI:AddDropdownTab(sectionName)
+            -- DROPDOWN TAB / SECTION (May suporta na rin sa Logo)
+            function elementAPI:AddDropdownTab(sectionName, logoName)
                 local targetColumn = getActiveColumn()
                 
-                -- Dropdown tab outer wrapper (bilog-bilog/smooth corners box frame style)
                 local sectionFrame = Instance.new("Frame", targetColumn)
                 sectionFrame.Size = UDim2.new(1, 0, 0, 0)
                 sectionFrame.AutomaticSize = Enum.AutomaticSize.Y
-                sectionFrame.BackgroundColor3 = Color3.fromRGB(22, 14, 18)
+                sectionFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
                 sectionFrame.BackgroundTransparency = 0.2
                 sectionFrame.BorderSizePixel = 1
-                sectionFrame.BorderColor3 = Color3.fromRGB(140, 35, 45)
+                sectionFrame.BorderColor3 = Color3.fromRGB(60, 60, 75)
 
                 local secCorner = Instance.new("UICorner", sectionFrame)
-                secCorner.CornerRadius = UDim.new(0, 6) -- Parang bilog ang gilid ng box frame
+                secCorner.CornerRadius = UDim.new(0, 6)
 
                 local sectionHeader = Instance.new("TextButton", sectionFrame)
-                sectionHeader.Size = UDim2.new(1, 0, 0, 26)
-                sectionHeader.BackgroundColor3 = Color3.fromRGB(35, 12, 18)
-                sectionHeader.BackgroundTransparency = 0.1
+                sectionHeader.Size = UDim2.new(1, 0, 0, 22) -- Subrang iksi/compact height
+                sectionHeader.BackgroundColor3 = Color3.fromRGB(42, 42, 54)
+                sectionHeader.BackgroundTransparency = 0.15
                 sectionHeader.Text = "   " .. sectionName
                 sectionHeader.TextColor3 = Color3.fromRGB(255, 255, 255)
                 sectionHeader.BorderSizePixel = 0
@@ -337,23 +333,34 @@ function UILibrary:Load(keyUrl, windowTitle)
                 local headCorner = Instance.new("UICorner", sectionHeader)
                 headCorner.CornerRadius = UDim.new(0, 6)
 
+                -- Logo Handler para sa Dropdown Tab / Section Header
+                if logoName and logoRegistry and logoRegistry[logoName] then
+                    local logoImage = Instance.new("ImageLabel", sectionHeader)
+                    logoImage.Size = UDim2.new(0, 14, 0, 14)
+                    logoImage.Position = UDim2.new(0, 5, 0.5, -7)
+                    logoImage.BackgroundTransparency = 1
+                    logoImage.Image = tostring(logoRegistry[logoName])
+                    logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                    sectionHeader.Text = "      " .. sectionName
+                end
+
                 local arrowLabel = Instance.new("TextLabel", sectionHeader)
                 arrowLabel.Size = UDim2.new(0, 20, 1, 0)
-                arrowLabel.Position = UDim2.new(1, -24, 0, 0)
+                arrowLabel.Position = UDim2.new(1, -22, 0, 0)
                 arrowLabel.BackgroundTransparency = 1
                 arrowLabel.Text = "▲"
-                arrowLabel.TextColor3 = Color3.fromRGB(220, 45, 55)
-                scaleText(arrowLabel, 8)
+                arrowLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+                scaleText(arrowLabel, 7)
 
                 local sectionContent = Instance.new("Frame", sectionFrame)
                 sectionContent.Size = UDim2.new(1, 0, 0, 0)
-                sectionContent.Position = UDim2.new(0, 0, 0, 28)
+                sectionContent.Position = UDim2.new(0, 0, 0, 24)
                 sectionContent.AutomaticSize = Enum.AutomaticSize.Y
                 sectionContent.BackgroundTransparency = 1
                 sectionContent.ClipsDescendants = true
 
                 local sectionLayout = Instance.new("UIListLayout", sectionContent)
-                sectionLayout.Padding = UDim.new(0, 6)
+                sectionLayout.Padding = UDim.new(0, 4)
                 sectionLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
                 local isSectionOpen = true
@@ -364,35 +371,49 @@ function UILibrary:Load(keyUrl, windowTitle)
                 end)
 
                 local subElementAPI = {}
-                function subElementAPI:AddToggle(toggleTitle, description, callback)
+
+                -- ADD TOGGLE (White transparent, subrang iksi)
+                function subElementAPI:AddToggle(toggleTitle, description, callback, logoName)
                     local wrapper = Instance.new("Frame", sectionContent)
-                    wrapper.Size = UDim2.new(1, 0, 0, 24)
+                    wrapper.Size = UDim2.new(1, 0, 0, 20) -- Subrang iksi
                     wrapper.BackgroundTransparency = 1
 
                     local toggleMain = Instance.new("Frame", wrapper)
-                    toggleMain.Size = UDim2.new(1, 0, 0, 24)
-                    toggleMain.BackgroundColor3 = Color3.fromRGB(40, 15, 20)
-                    toggleMain.BackgroundTransparency = 0.15
+                    toggleMain.Size = UDim2.new(1, 0, 0, 20)
+                    toggleMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White transparent style
+                    toggleMain.BackgroundTransparency = 0.92
                     toggleMain.BorderSizePixel = 1
-                    toggleMain.BorderColor3 = Color3.fromRGB(150, 35, 45)
+                    toggleMain.BorderColor3 = Color3.fromRGB(80, 80, 100)
 
                     local tCorner = Instance.new("UICorner", toggleMain)
                     tCorner.CornerRadius = UDim.new(0, 4)
 
                     local titleText = Instance.new("TextLabel", toggleMain)
-                    titleText.Size = UDim2.new(1, -30, 1, 0)
-                    titleText.Position = UDim2.new(0, 6, 0, 0)
+                    titleText.Size = UDim2.new(1, -28, 1, 0)
+                    titleText.Position = UDim2.new(0, 5, 0, 0)
                     titleText.Text = toggleTitle
                     titleText.TextColor3 = Color3.fromRGB(240, 240, 240)
                     titleText.BackgroundTransparency = 1
                     titleText.TextXAlignment = Enum.TextXAlignment.Left
                     titleText.Font = Enum.Font.GothamMedium
-                    scaleText(titleText, 7.5)
+                    scaleText(titleText, 7)
+
+                    -- Logo Handler para sa Toggle
+                    if logoName and logoRegistry and logoRegistry[logoName] then
+                        local logoImage = Instance.new("ImageLabel", toggleMain)
+                        logoImage.Size = UDim2.new(0, 12, 0, 12)
+                        logoImage.Position = UDim2.new(0, 4, 0.5, -6)
+                        logoImage.BackgroundTransparency = 1
+                        logoImage.Image = tostring(logoRegistry[logoName])
+                        logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                        titleText.Position = UDim2.new(0, 20, 0, 0)
+                        titleText.Size = UDim2.new(1, -44, 1, 0)
+                    end
 
                     local toggleButtonBox = Instance.new("TextButton", toggleMain)
-                    toggleButtonBox.Size = UDim2.new(0, 14, 0, 14)
-                    toggleButtonBox.Position = UDim2.new(1, -20, 0.5, -7)
-                    toggleButtonBox.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+                    toggleButtonBox.Size = UDim2.new(0, 12, 0, 12)
+                    toggleButtonBox.Position = UDim2.new(1, -16, 0.5, -6)
+                    toggleButtonBox.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
                     toggleButtonBox.Text = ""
                     toggleButtonBox.BorderSizePixel = 0
                     
@@ -402,35 +423,48 @@ function UILibrary:Load(keyUrl, windowTitle)
                     local isToggled = false
                     toggleButtonBox.MouseButton1Click:Connect(function()
                         isToggled = not isToggled
-                        toggleButtonBox.BackgroundColor3 = isToggled and Color3.fromRGB(40, 200, 80) or Color3.fromRGB(220, 40, 40)
+                        toggleButtonBox.BackgroundColor3 = isToggled and Color3.fromRGB(40, 200, 80) or Color3.fromRGB(220, 60, 60)
                         callback(isToggled)
                     end)
                 end
 
-                function subElementAPI:AddButton(buttonTitle, description, callback)
+                -- ADD BUTTON (White transparent, subrang iksi)
+                function subElementAPI:AddButton(buttonTitle, description, callback, logoName)
                     local wrapper = Instance.new("Frame", sectionContent)
-                    wrapper.Size = UDim2.new(1, 0, 0, 24)
+                    wrapper.Size = UDim2.new(1, 0, 0, 20) -- Subrang iksi
                     wrapper.BackgroundTransparency = 1
 
                     local buttonObject = Instance.new("TextButton", wrapper)
-                    buttonObject.Size = UDim2.new(1, 0, 0, 24)
-                    buttonObject.BackgroundColor3 = Color3.fromRGB(80, 20, 30)
-                    buttonObject.BackgroundTransparency = 0.1
-                    buttonObject.Text = buttonTitle
+                    buttonObject.Size = UDim2.new(1, 0, 0, 20)
+                    buttonObject.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White transparent style
+                    buttonObject.BackgroundTransparency = 0.90
+                    buttonObject.Text = "   " .. buttonTitle
                     buttonObject.TextColor3 = Color3.fromRGB(255, 255, 255)
                     buttonObject.BorderSizePixel = 1
-                    buttonObject.BorderColor3 = Color3.fromRGB(160, 40, 50)
+                    buttonObject.BorderColor3 = Color3.fromRGB(80, 80, 100)
                     buttonObject.Font = Enum.Font.GothamSemibold
-                    scaleText(buttonObject, 7.5)
+                    buttonObject.TextXAlignment = Enum.TextXAlignment.Left
+                    scaleText(buttonObject, 7)
 
                     local btnC = Instance.new("UICorner", buttonObject)
                     btnC.CornerRadius = UDim.new(0, 4)
 
+                    -- Logo Handler para sa Button
+                    if logoName and logoRegistry and logoRegistry[logoName] then
+                        local logoImage = Instance.new("ImageLabel", buttonObject)
+                        logoImage.Size = UDim2.new(0, 12, 0, 12)
+                        logoImage.Position = UDim2.new(0, 4, 0.5, -6)
+                        logoImage.BackgroundTransparency = 1
+                        logoImage.Image = tostring(logoRegistry[logoName])
+                        logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                        buttonObject.Text = "      " .. buttonTitle
+                    end
+
                     buttonObject.MouseButton1Click:Connect(function()
-                        local originalColor = buttonObject.BackgroundColor3
-                        buttonObject.BackgroundColor3 = Color3.fromRGB(220, 50, 60)
+                        local originalColor = buttonObject.BackgroundTransparency
+                        buttonObject.BackgroundTransparency = 0.70
                         task.wait(0.1)
-                        buttonObject.BackgroundColor3 = originalColor
+                        buttonObject.BackgroundTransparency = originalColor
                         callback()
                     end)
                 end
@@ -438,36 +472,48 @@ function UILibrary:Load(keyUrl, windowTitle)
                 return subElementAPI
             end
 
-            function elementAPI:AddToggle(toggleTitle, description, callback)
+            -- Direct AddToggle (Kapag nasa labas ng section)
+            function elementAPI:AddToggle(toggleTitle, description, callback, logoName)
                 local targetColumn = getActiveColumn()
                 local wrapper = Instance.new("Frame", targetColumn)
-                wrapper.Size = UDim2.new(1, 0, 0, 24)
+                wrapper.Size = UDim2.new(1, 0, 0, 20)
                 wrapper.BackgroundTransparency = 1
 
                 local toggleMain = Instance.new("Frame", wrapper)
-                toggleMain.Size = UDim2.new(1, 0, 0, 24)
-                toggleMain.BackgroundColor3 = Color3.fromRGB(40, 15, 20)
-                toggleMain.BackgroundTransparency = 0.15
+                toggleMain.Size = UDim2.new(1, 0, 0, 20)
+                toggleMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                toggleMain.BackgroundTransparency = 0.92
                 toggleMain.BorderSizePixel = 1
-                toggleMain.BorderColor3 = Color3.fromRGB(150, 35, 45)
+                toggleMain.BorderColor3 = Color3.fromRGB(80, 80, 100)
 
                 local tCorner = Instance.new("UICorner", toggleMain)
                 tCorner.CornerRadius = UDim.new(0, 4)
 
                 local titleText = Instance.new("TextLabel", toggleMain)
-                titleText.Size = UDim2.new(1, -30, 1, 0)
-                titleText.Position = UDim2.new(0, 6, 0, 0)
+                titleText.Size = UDim2.new(1, -28, 1, 0)
+                titleText.Position = UDim2.new(0, 5, 0, 0)
                 titleText.Text = toggleTitle
                 titleText.TextColor3 = Color3.fromRGB(240, 240, 240)
                 titleText.BackgroundTransparency = 1
                 titleText.TextXAlignment = Enum.TextXAlignment.Left
                 titleText.Font = Enum.Font.GothamMedium
-                scaleText(titleText, 7.5)
+                scaleText(titleText, 7)
+
+                if logoName and logoRegistry and logoRegistry[logoName] then
+                    local logoImage = Instance.new("ImageLabel", toggleMain)
+                    logoImage.Size = UDim2.new(0, 12, 0, 12)
+                    logoImage.Position = UDim2.new(0, 4, 0.5, -6)
+                    logoImage.BackgroundTransparency = 1
+                    logoImage.Image = tostring(logoRegistry[logoName])
+                    logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                    titleText.Position = UDim2.new(0, 20, 0, 0)
+                    titleText.Size = UDim2.new(1, -44, 1, 0)
+                end
 
                 local toggleButtonBox = Instance.new("TextButton", toggleMain)
-                toggleButtonBox.Size = UDim2.new(0, 14, 0, 14)
-                toggleButtonBox.Position = UDim2.new(1, -20, 0.5, -7)
-                toggleButtonBox.BackgroundColor3 = Color3.fromRGB(220, 40, 40)
+                toggleButtonBox.Size = UDim2.new(0, 12, 0, 12)
+                toggleButtonBox.Position = UDim2.new(1, -16, 0.5, -6)
+                toggleButtonBox.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
                 toggleButtonBox.Text = ""
                 toggleButtonBox.BorderSizePixel = 0
 
@@ -477,36 +523,48 @@ function UILibrary:Load(keyUrl, windowTitle)
                 local isToggled = false
                 toggleButtonBox.MouseButton1Click:Connect(function()
                     isToggled = not isToggled
-                    toggleButtonBox.BackgroundColor3 = isToggled and Color3.fromRGB(40, 200, 80) or Color3.fromRGB(220, 40, 40)
+                    toggleButtonBox.BackgroundColor3 = isToggled and Color3.fromRGB(40, 200, 80) or Color3.fromRGB(220, 60, 60)
                     callback(isToggled)
                 end)
             end
 
-            function elementAPI:AddButton(buttonTitle, description, callback)
+            -- Direct AddButton (Kapag nasa labas ng section)
+            function elementAPI:AddButton(buttonTitle, description, callback, logoName)
                 local targetColumn = getActiveColumn()
                 local wrapper = Instance.new("Frame", targetColumn)
-                wrapper.Size = UDim2.new(1, 0, 0, 24)
+                wrapper.Size = UDim2.new(1, 0, 0, 20)
                 wrapper.BackgroundTransparency = 1
 
                 local buttonObject = Instance.new("TextButton", wrapper)
-                buttonObject.Size = UDim2.new(1, 0, 0, 24)
-                buttonObject.BackgroundColor3 = Color3.fromRGB(80, 20, 30)
-                buttonObject.BackgroundTransparency = 0.1
-                buttonObject.Text = buttonTitle
+                buttonObject.Size = UDim2.new(1, 0, 0, 20)
+                buttonObject.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                buttonObject.BackgroundTransparency = 0.90
+                buttonObject.Text = "   " .. buttonTitle
                 buttonObject.TextColor3 = Color3.fromRGB(255, 255, 255)
                 buttonObject.BorderSizePixel = 1
-                buttonObject.BorderColor3 = Color3.fromRGB(160, 40, 50)
+                buttonObject.BorderColor3 = Color3.fromRGB(80, 80, 100)
                 buttonObject.Font = Enum.Font.GothamSemibold
-                scaleText(buttonObject, 7.5)
+                buttonObject.TextXAlignment = Enum.TextXAlignment.Left
+                scaleText(buttonObject, 7)
 
                 local btnC = Instance.new("UICorner", buttonObject)
                 btnC.CornerRadius = UDim.new(0, 4)
 
+                if logoName and logoRegistry and logoRegistry[logoName] then
+                    local logoImage = Instance.new("ImageLabel", buttonObject)
+                    logoImage.Size = UDim2.new(0, 12, 0, 12)
+                    logoImage.Position = UDim2.new(0, 4, 0.5, -6)
+                    logoImage.BackgroundTransparency = 1
+                    logoImage.Image = tostring(logoRegistry[logoName])
+                    logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                    buttonObject.Text = "      " .. buttonTitle
+                end
+
                 buttonObject.MouseButton1Click:Connect(function()
-                    local originalColor = buttonObject.BackgroundColor3
-                    buttonObject.BackgroundColor3 = Color3.fromRGB(220, 50, 60)
+                    local originalColor = buttonObject.BackgroundTransparency
+                    buttonObject.BackgroundTransparency = 0.70
                     task.wait(0.1)
-                    buttonObject.BackgroundColor3 = originalColor
+                    buttonObject.BackgroundTransparency = originalColor
                     callback()
                 end)
             end
