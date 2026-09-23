@@ -112,14 +112,14 @@ function UILibrary:Load(keyUrl, windowTitle)
         menuScreenGui.Name = "KyleBestMenu"
         menuScreenGui.ResetOnSpawn = false
 
-        -- MAIN WINDOW (Pinagandang liwanag - hindi na sobrang dilim)
+        -- MAIN WINDOW (Mas madilim at mas makapal/solid ang dark background)
         local mainFrame = Instance.new("Frame", menuScreenGui)
         mainFrame.Size = UDim2.new(0, 580, 0, 350)
         mainFrame.Position = UDim2.new(0.5, -290, 0.5, -175)
-        mainFrame.BackgroundColor3 = Color3.fromRGB(24, 24, 30) 
-        mainFrame.BackgroundTransparency = 0.08
+        mainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 16) 
+        mainFrame.BackgroundTransparency = 0.02
         mainFrame.BorderSizePixel = 1
-        mainFrame.BorderColor3 = Color3.fromRGB(70, 70, 85)
+        mainFrame.BorderColor3 = Color3.fromRGB(50, 50, 65)
         mainFrame.Visible = false
 
         local mainCorner = Instance.new("UICorner", mainFrame)
@@ -128,8 +128,8 @@ function UILibrary:Load(keyUrl, windowTitle)
         local topBarFrame = Instance.new("Frame", mainFrame)
         topBarFrame.Size = UDim2.new(1, 0, 0, 30)
         topBarFrame.Position = UDim2.new(0, 0, 0, -32)
-        topBarFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 40)
-        topBarFrame.BackgroundTransparency = 0.05
+        topBarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 26)
+        topBarFrame.BackgroundTransparency = 0.02
         topBarFrame.BorderSizePixel = 1
         topBarFrame.BorderColor3 = Color3.fromRGB(200, 40, 50)
 
@@ -149,10 +149,10 @@ function UILibrary:Load(keyUrl, windowTitle)
         local tabScrollingFrame = Instance.new("ScrollingFrame", mainFrame)
         tabScrollingFrame.Size = UDim2.new(0, 130, 1, -12)
         tabScrollingFrame.Position = UDim2.new(0, 6, 0, 6)
-        tabScrollingFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
-        tabScrollingFrame.BackgroundTransparency = 0.2
+        tabScrollingFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+        tabScrollingFrame.BackgroundTransparency = 0.3
         tabScrollingFrame.BorderSizePixel = 1
-        tabScrollingFrame.BorderColor3 = Color3.fromRGB(45, 45, 55)
+        tabScrollingFrame.BorderColor3 = Color3.fromRGB(35, 35, 45)
         tabScrollingFrame.ScrollBarThickness = 2
 
         local tabLayout = Instance.new("UIListLayout", tabScrollingFrame)
@@ -186,19 +186,20 @@ function UILibrary:Load(keyUrl, windowTitle)
         end)
 
         local tabContainerRegistry = {}
+        local tabButtonRegistry = {}
         local isTweeningTab = false
         local windowAPI = {}
 
         function windowAPI:AddTab(tabName, tabDescription, logoName)
-            -- Tab Button sa gilid: Subrang nipis/subtle na kulay dark (wala nang matingkad na red)
+            -- Tab Button sa gilid
             local tabButton = Instance.new("TextButton", tabScrollingFrame)
             tabButton.Size = UDim2.new(1, -4, 0, 28)
-            tabButton.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
-            tabButton.BackgroundTransparency = 0.5
-            tabButton.Text = "   " .. tabName
-            tabButton.TextColor3 = Color3.fromRGB(230, 230, 230)
+            tabButton.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+            tabButton.BackgroundTransparency = 0.4
+            tabButton.Text = "    " .. tabName
+            tabButton.TextColor3 = Color3.fromRGB(210, 210, 210)
             tabButton.BorderSizePixel = 1
-            tabButton.BorderColor3 = Color3.fromRGB(55, 55, 70)
+            tabButton.BorderColor3 = Color3.fromRGB(45, 45, 60)
             tabButton.TextXAlignment = Enum.TextXAlignment.Left
             tabButton.Font = Enum.Font.GothamSemibold
             scaleText(tabButton, 8)
@@ -206,16 +207,18 @@ function UILibrary:Load(keyUrl, windowTitle)
             local tabCorner = Instance.new("UICorner", tabButton)
             tabCorner.CornerRadius = UDim.new(0, 4)
 
-            -- Logo Handler para sa Tab Button
+            -- Logo Handler para sa Tab (Kulay red at may sapat na distansya para hindi magkadikit sa title)
             if logoName and logoRegistry and logoRegistry[logoName] then
                 local logoImage = Instance.new("ImageLabel", tabButton)
-                logoImage.Size = UDim2.new(0, 16, 0, 16)
-                logoImage.Position = UDim2.new(0, 6, 0.5, -8)
+                logoImage.Size = UDim2.new(0, 15, 0, 15)
+                logoImage.Position = UDim2.new(0, 6, 0.5, -7.5)
                 logoImage.BackgroundTransparency = 1
                 logoImage.Image = tostring(logoRegistry[logoName])
-                logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                tabButton.Text = "      " .. tabName
+                logoImage.ImageColor3 = Color3.fromRGB(220, 40, 50) -- Kulay red ang logo
+                tabButton.Text = "        " .. tabName -- Sakto ang layo para hindi ma-overlap ng title
             end
+
+            table.insert(tabButtonRegistry, tabButton)
 
             local tabContentFrame = Instance.new("Frame", containerFrame)
             tabContentFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -252,11 +255,11 @@ function UILibrary:Load(keyUrl, windowTitle)
             rightColumn.AutomaticSize = Enum.AutomaticSize.Y
 
             local leftLayout = Instance.new("UIListLayout", leftColumn)
-            leftLayout.Padding = UDim.new(0, 6)
+            leftLayout.Padding = UDim.new(0, 8) -- Pinalayo para hindi magkadikit-dikit ang elements
             leftLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
             local rightLayout = Instance.new("UIListLayout", rightColumn)
-            rightLayout.Padding = UDim.new(0, 6)
+            rightLayout.Padding = UDim.new(0, 8) -- Pinalayo para hindi magkadikit-dikit ang elements
             rightLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
             local columnToggle = 0
@@ -294,6 +297,13 @@ function UILibrary:Load(keyUrl, windowTitle)
             tabButton.MouseButton1Click:Connect(function()
                 if isTweeningTab or tabContentFrame.Visible then return end
                 isTweeningTab = true
+
+                -- I-reset ang kulay ng lahat ng tab buttons sa gilid, tapos gawing white highlight ang napindot
+                for _, btn in ipairs(tabButtonRegistry) do
+                    btn.TextColor3 = Color3.fromRGB(210, 210, 210)
+                end
+                tabButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White highlight kapag pinindot
+
                 for _, frame in pairs(tabContainerRegistry) do frame.Visible = false end
                 tabContentFrame.Position = UDim2.new(1, 0, 0, 0)
                 tabContentFrame.Visible = true
@@ -304,26 +314,26 @@ function UILibrary:Load(keyUrl, windowTitle)
 
             local elementAPI = {}
 
-            -- DROPDOWN TAB / SECTION (May suporta na rin sa Logo)
+            -- DROPDOWN TAB / SECTION
             function elementAPI:AddDropdownTab(sectionName, logoName)
                 local targetColumn = getActiveColumn()
                 
                 local sectionFrame = Instance.new("Frame", targetColumn)
                 sectionFrame.Size = UDim2.new(1, 0, 0, 0)
                 sectionFrame.AutomaticSize = Enum.AutomaticSize.Y
-                sectionFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
+                sectionFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
                 sectionFrame.BackgroundTransparency = 0.2
                 sectionFrame.BorderSizePixel = 1
-                sectionFrame.BorderColor3 = Color3.fromRGB(60, 60, 75)
+                sectionFrame.BorderColor3 = Color3.fromRGB(50, 50, 65)
 
                 local secCorner = Instance.new("UICorner", sectionFrame)
                 secCorner.CornerRadius = UDim.new(0, 6)
 
                 local sectionHeader = Instance.new("TextButton", sectionFrame)
-                sectionHeader.Size = UDim2.new(1, 0, 0, 22) -- Subrang iksi/compact height
-                sectionHeader.BackgroundColor3 = Color3.fromRGB(42, 42, 54)
+                sectionHeader.Size = UDim2.new(1, 0, 0, 22)
+                sectionHeader.BackgroundColor3 = Color3.fromRGB(32, 32, 44)
                 sectionHeader.BackgroundTransparency = 0.15
-                sectionHeader.Text = "   " .. sectionName
+                sectionHeader.Text = "    " .. sectionName
                 sectionHeader.TextColor3 = Color3.fromRGB(255, 255, 255)
                 sectionHeader.BorderSizePixel = 0
                 sectionHeader.TextXAlignment = Enum.TextXAlignment.Left
@@ -333,15 +343,15 @@ function UILibrary:Load(keyUrl, windowTitle)
                 local headCorner = Instance.new("UICorner", sectionHeader)
                 headCorner.CornerRadius = UDim.new(0, 6)
 
-                -- Logo Handler para sa Dropdown Tab / Section Header
+                -- Logo Handler para sa Section (Kulay red at may sapat na espasyo)
                 if logoName and logoRegistry and logoRegistry[logoName] then
                     local logoImage = Instance.new("ImageLabel", sectionHeader)
                     logoImage.Size = UDim2.new(0, 14, 0, 14)
                     logoImage.Position = UDim2.new(0, 5, 0.5, -7)
                     logoImage.BackgroundTransparency = 1
                     logoImage.Image = tostring(logoRegistry[logoName])
-                    logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                    sectionHeader.Text = "      " .. sectionName
+                    logoImage.ImageColor3 = Color3.fromRGB(220, 40, 50) -- Kulay red ang logo
+                    sectionHeader.Text = "        " .. sectionName
                 end
 
                 local arrowLabel = Instance.new("TextLabel", sectionHeader)
@@ -360,7 +370,7 @@ function UILibrary:Load(keyUrl, windowTitle)
                 sectionContent.ClipsDescendants = true
 
                 local sectionLayout = Instance.new("UIListLayout", sectionContent)
-                sectionLayout.Padding = UDim.new(0, 4)
+                sectionLayout.Padding = UDim.new(0, 6) -- Sapat na espasyo sa loob ng section
                 sectionLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
                 local isSectionOpen = true
@@ -372,15 +382,15 @@ function UILibrary:Load(keyUrl, windowTitle)
 
                 local subElementAPI = {}
 
-                -- ADD TOGGLE (White transparent, subrang iksi)
+                -- ADD TOGGLE (May sapat na spacing at red logo)
                 function subElementAPI:AddToggle(toggleTitle, description, callback, logoName)
                     local wrapper = Instance.new("Frame", sectionContent)
-                    wrapper.Size = UDim2.new(1, 0, 0, 20) -- Subrang iksi
+                    wrapper.Size = UDim2.new(1, 0, 0, 20)
                     wrapper.BackgroundTransparency = 1
 
                     local toggleMain = Instance.new("Frame", wrapper)
                     toggleMain.Size = UDim2.new(1, 0, 0, 20)
-                    toggleMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White transparent style
+                    toggleMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                     toggleMain.BackgroundTransparency = 0.92
                     toggleMain.BorderSizePixel = 1
                     toggleMain.BorderColor3 = Color3.fromRGB(80, 80, 100)
@@ -398,15 +408,14 @@ function UILibrary:Load(keyUrl, windowTitle)
                     titleText.Font = Enum.Font.GothamMedium
                     scaleText(titleText, 7)
 
-                    -- Logo Handler para sa Toggle
                     if logoName and logoRegistry and logoRegistry[logoName] then
                         local logoImage = Instance.new("ImageLabel", toggleMain)
                         logoImage.Size = UDim2.new(0, 12, 0, 12)
                         logoImage.Position = UDim2.new(0, 4, 0.5, -6)
                         logoImage.BackgroundTransparency = 1
                         logoImage.Image = tostring(logoRegistry[logoName])
-                        logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                        titleText.Position = UDim2.new(0, 20, 0, 0)
+                        logoImage.ImageColor3 = Color3.fromRGB(220, 40, 50) -- Kulay red ang logo
+                        titleText.Position = UDim2.new(0, 22, 0, 0)
                         titleText.Size = UDim2.new(1, -44, 1, 0)
                     end
 
@@ -428,17 +437,17 @@ function UILibrary:Load(keyUrl, windowTitle)
                     end)
                 end
 
-                -- ADD BUTTON (White transparent, subrang iksi)
+                -- ADD BUTTON (May sapat na spacing at red logo)
                 function subElementAPI:AddButton(buttonTitle, description, callback, logoName)
                     local wrapper = Instance.new("Frame", sectionContent)
-                    wrapper.Size = UDim2.new(1, 0, 0, 20) -- Subrang iksi
+                    wrapper.Size = UDim2.new(1, 0, 0, 20)
                     wrapper.BackgroundTransparency = 1
 
                     local buttonObject = Instance.new("TextButton", wrapper)
                     buttonObject.Size = UDim2.new(1, 0, 0, 20)
-                    buttonObject.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White transparent style
+                    buttonObject.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                     buttonObject.BackgroundTransparency = 0.90
-                    buttonObject.Text = "   " .. buttonTitle
+                    buttonObject.Text = "    " .. buttonTitle
                     buttonObject.TextColor3 = Color3.fromRGB(255, 255, 255)
                     buttonObject.BorderSizePixel = 1
                     buttonObject.BorderColor3 = Color3.fromRGB(80, 80, 100)
@@ -449,15 +458,14 @@ function UILibrary:Load(keyUrl, windowTitle)
                     local btnC = Instance.new("UICorner", buttonObject)
                     btnC.CornerRadius = UDim.new(0, 4)
 
-                    -- Logo Handler para sa Button
                     if logoName and logoRegistry and logoRegistry[logoName] then
                         local logoImage = Instance.new("ImageLabel", buttonObject)
                         logoImage.Size = UDim2.new(0, 12, 0, 12)
                         logoImage.Position = UDim2.new(0, 4, 0.5, -6)
                         logoImage.BackgroundTransparency = 1
                         logoImage.Image = tostring(logoRegistry[logoName])
-                        logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                        buttonObject.Text = "      " .. buttonTitle
+                        logoImage.ImageColor3 = Color3.fromRGB(220, 40, 50) -- Kulay red ang logo
+                        buttonObject.Text = "        " .. buttonTitle
                     end
 
                     buttonObject.MouseButton1Click:Connect(function()
@@ -472,7 +480,7 @@ function UILibrary:Load(keyUrl, windowTitle)
                 return subElementAPI
             end
 
-            -- Direct AddToggle (Kapag nasa labas ng section)
+            -- Direct AddToggle (Nasa labas ng section)
             function elementAPI:AddToggle(toggleTitle, description, callback, logoName)
                 local targetColumn = getActiveColumn()
                 local wrapper = Instance.new("Frame", targetColumn)
@@ -505,8 +513,8 @@ function UILibrary:Load(keyUrl, windowTitle)
                     logoImage.Position = UDim2.new(0, 4, 0.5, -6)
                     logoImage.BackgroundTransparency = 1
                     logoImage.Image = tostring(logoRegistry[logoName])
-                    logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                    titleText.Position = UDim2.new(0, 20, 0, 0)
+                    logoImage.ImageColor3 = Color3.fromRGB(220, 40, 50) -- Kulay red ang logo
+                    titleText.Position = UDim2.new(0, 22, 0, 0)
                     titleText.Size = UDim2.new(1, -44, 1, 0)
                 end
 
@@ -528,7 +536,7 @@ function UILibrary:Load(keyUrl, windowTitle)
                 end)
             end
 
-            -- Direct AddButton (Kapag nasa labas ng section)
+            -- Direct AddButton (Nasa labas ng section)
             function elementAPI:AddButton(buttonTitle, description, callback, logoName)
                 local targetColumn = getActiveColumn()
                 local wrapper = Instance.new("Frame", targetColumn)
@@ -539,7 +547,7 @@ function UILibrary:Load(keyUrl, windowTitle)
                 buttonObject.Size = UDim2.new(1, 0, 0, 20)
                 buttonObject.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                 buttonObject.BackgroundTransparency = 0.90
-                buttonObject.Text = "   " .. buttonTitle
+                buttonObject.Text = "    " .. buttonTitle
                 buttonObject.TextColor3 = Color3.fromRGB(255, 255, 255)
                 buttonObject.BorderSizePixel = 1
                 buttonObject.BorderColor3 = Color3.fromRGB(80, 80, 100)
@@ -556,8 +564,8 @@ function UILibrary:Load(keyUrl, windowTitle)
                     logoImage.Position = UDim2.new(0, 4, 0.5, -6)
                     logoImage.BackgroundTransparency = 1
                     logoImage.Image = tostring(logoRegistry[logoName])
-                    logoImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
-                    buttonObject.Text = "      " .. buttonTitle
+                    logoImage.ImageColor3 = Color3.fromRGB(220, 40, 50) -- Kulay red ang logo
+                    buttonObject.Text = "        " .. buttonTitle
                 end
 
                 buttonObject.MouseButton1Click:Connect(function()
