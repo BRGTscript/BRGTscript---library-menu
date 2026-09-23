@@ -3,8 +3,7 @@ local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 
--- Variable para sa Logo Library loadstring
-local loadLogoLibrary = "ILAGAY_MO_DITO_ANG_URL_NG_LOGO_SCRIPT_MO"
+local loadLogoLibrary = "https://raw.githubusercontent.com/BRGTscript/BRGTscript---library-menu/refs/heads/main/LOGOS.luau"
 
 local function scaleText(textLabel, maxSize)
     textLabel.TextScaled = true
@@ -22,7 +21,7 @@ function UILibrary:Load(keyUrl, windowTitle)
 
     local logoRegistry = {}
     pcall(function()
-        if loadLogoLibrary and loadLogoLibrary ~= "ILAGAY_MO_DITO_ANG_URL_NG_LOGO_SCRIPT_MO" then
+        if loadLogoLibrary and loadLogoLibrary ~= "https://raw.githubusercontent.com/BRGTscript/BRGTscript---library-menu/refs/heads/main/LOGOS.luau" then
             logoRegistry = loadstring(game:HttpGet(loadLogoLibrary))() or {}
         end
     end)
